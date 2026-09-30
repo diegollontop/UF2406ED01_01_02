@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Eliminar categoría</h1>
+
+    <p>¿Seguro que quieres eliminar <strong>{{ categoria.nombre }}</strong>?</p>
+    
+    <!-- Advertencia crítica sobre la eliminación en cascada de los productos vinculados -->
+    <p>Atención: también se eliminarán sus productos.</p>
+
+    <form method="post">
+        <!-- Token de seguridad obligatorio de Django para evitar ataques maliciosos CSRF -->
+        {% csrf_token %}
+        <button type="submit">Eliminar</button>
+    </form>
+{% endblock %}

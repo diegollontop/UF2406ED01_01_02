@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Eliminar producto</h1>
+
+    <p>¿Seguro que quieres eliminar <strong>{{ producto.nombre }}</strong>?</p>
+
+    <!-- Formulario seguro que realiza la confirmación de la eliminación mediante una petición POST -->
+    <form method="post">
+        <!-- Token de seguridad obligatorio de Django para evitar ataques maliciosos CSRF -->
+        {% csrf_token %}
+        <button type="submit">Sí, eliminar</button>
+    </form>
+
+    <!-- Enlace para regresar a la lista de productos cancelando la operación de borrado -->
+    <a href="{% url 'producto_lista' %}">Cancelar</a>
+{% endblock %}

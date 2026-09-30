@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- Muestra de manera dinámica el título de la página según estemos creando o editando una categoría -->
+    <h1>{{ titulo }}</h1>
+
+    <form method="post">
+        <!-- Token de seguridad obligatorio de Django para evitar ataques maliciosos CSRF -->
+        {% csrf_token %}
+        
+        <!-- Renderiza de forma automática los campos del formulario de la categoría en párrafos -->
+        {{ form.as_p }}
+        
+        <button type="submit">Guardar</button>
+    </form>
+{% endblock %}

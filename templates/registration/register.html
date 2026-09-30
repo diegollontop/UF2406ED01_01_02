@@ -1,0 +1,32 @@
+<!-- Hereda la estructura de la plantilla base -->
+{% extends "base.html" %}
+
+<!-- Define el título de la página de registro -->
+{% block title %}
+Registro
+{% endblock %}
+
+{% block content %}
+    <h1>
+        Crear cuenta
+    </h1>
+
+    <!-- Formulario de registro seguro mediante POST -->
+    <form method="post">
+        <!-- Token obligatorio de Django para evitar ataques CSRF -->
+        {% csrf_token %}
+        <!-- Renderiza los campos del formulario automáticamente en párrafos -->
+        {{ form.as_p }}
+        <button type="submit">
+            Registrarse
+        </button>
+    </form>
+    
+    <p>
+        ¿Ya tienes cuenta? 
+        <a href="{% url 'login' %}">
+            Iniciar sesión
+        </a>
+    </p>
+    
+{% endblock %}

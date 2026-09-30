@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Tienda Django{% endblock %}</title>
+    <!-- Estilos CSS de Bootstrap 5.3.3 para habilitar el diseño responsivo -->
+    <link href="https://jsdelivr.net" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <!-- Barra de navegación principal global integrada con Bootstrap -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Tienda Django</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPrincipal">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarPrincipal">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'producto_lista' %}">Productos</a>
+                    </li>
+                    <!-- Enlace visible del catálogo de categorías únicamente para usuarios autenticados -->
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'categoria_lista' %}">Categorías</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                
+                <!-- Sección de autenticación en la barra de navegación (Login / Registro / Logout) -->
+                <div class="d-flex align-items-center gap-2">
+                    {% if user.is_authenticated %}
+                        <span class="text-white me-2">Hola, {{ user.username }}</span>
+                        <!-- Formulario seguro POST para realizar el cierre de sesión nativo de Django -->
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-light btn-sm">Cerrar sesión</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm">Login</a>
+                        <a href="{% url 'register' %}" class="btn btn-primary btn-sm">Registrarse</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenedor central adaptable donde se inyectará el contenido específico de cada página -->
+    <main class="container py-4">
+        <!-- Bloque encargado de renderizar mensajes temporales de Django (Éxito, Errores, etc.) -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Espacio dinámico que heredarán el resto de tus archivos .html -->
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Archivo JS de Bootstrap necesario para las animaciones y el menú desplegable móvil -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

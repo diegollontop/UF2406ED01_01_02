@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Productos</h1>
+
+    <!-- Condicional para mostrar el botón de creación solo a los usuarios que han iniciado sesión -->
+    {% if user.is_authenticated %}
+        <a href="{% url 'producto_crear' %}">Nuevo producto</a>
+    {% endif %}
+    
+    <hr>
+
+    <!-- Bucle que recorre y muestra la lista de todos los productos disponibles -->
+    {% for producto in productos %}
+        <h2>
+            <!-- Enlace dinámico que redirige al detalle específico del producto usando su ID único (pk) -->
+            <a href="{% url 'producto_detalle' producto.pk %}">
+                {{ producto.nombre }}
+            </a>
+        </h2>
+        <p>Categoría: {{ producto.categoria.nombre }}</p>
+        <p>Precio: {{ producto.precio }} €</p>
+    {% empty %}
+        <!-- Mensaje alternativo que se muestra si la lista de productos está vacía -->
+        <p>No existen productos.</p>
+    {% endfor %}
+{% endblock %}

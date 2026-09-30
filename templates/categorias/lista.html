@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Categorías</h1>
+
+    <!-- Enlace directo para que los usuarios registrados creen una nueva categoría -->
+    <a href="{% url 'categoria_crear' %}">Nueva categoría</a>
+    
+    <hr>
+
+    <!-- Bucle que recorre y lista todas las categorías almacenadas en el sistema -->
+    {% for categoria in categorias %}
+        <h2>{{ categoria.nombre }}</h2>
+        <p>{{ categoria.descripcion }}</p>
+        
+        <!-- Enlaces de administración para modificar o dar de baja una categoría usando su ID (pk) -->
+        <a href="{% url 'categoria_editar' categoria.pk %}">Editar</a>
+        |
+        <a href="{% url 'categoria_eliminar' categoria.pk %}">Eliminar</a>
+    {% empty %}
+        <!-- Mensaje alternativo que se despliega si todavía no se ha creado ninguna categoría -->
+        <p>No existen categorías.</p>
+    {% endfor %}
+{% endblock %}

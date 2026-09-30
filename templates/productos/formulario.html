@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- Muestra dinámicamente el encabezado según si se está creando o editando un producto -->
+    <h1>{{ titulo }}</h1>
+
+    <form method="post">
+        <!-- Token de seguridad obligatorio de Django para evitar ataques maliciosos CSRF -->
+        {% csrf_token %}
+        
+        <!-- Renderiza los campos del formulario de producto estructurados en párrafos -->
+        {{ form.as_p }}
+        
+        <button type="submit">Guardar</button>
+    </form>
+
+    <!-- Enlace para regresar al catálogo completo de productos sin guardar ningún cambio -->
+    <a href="{% url 'producto_lista' %}">Cancelar</a>
+{% endblock %}

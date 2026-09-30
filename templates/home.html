@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Inicio
+{% endblock %}
+
+{% block content %}
+    <!-- Contenedor estilizado con Bootstrap (Jumbotron) para dar la bienvenida al usuario -->
+    <div class="p-5 bg-white rounded shadow-sm">
+        <h1 class="display-5 fw-bold">Tienda Django</h1>
+        <p class="lead">
+            Proyecto desarrollado con Django, autenticación de usuarios, CRUD y recuperación de contraseña.
+        </p>
+
+        <!-- Bloque condicional que adapta las opciones y botones según el estado de la sesión -->
+        {% if user.is_authenticated %}
+            <p>Has iniciado sesión como <strong>{{ user.username }}</strong>.</p>
+            <a href="{% url 'producto_lista' %}" class="btn btn-primary">
+                Ver productos
+            </a>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn btn-primary">
+                Iniciar sesión
+            </a>
+            <a href="{% url 'register' %}" class="btn btn-outline-primary">
+                Crear cuenta
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}
+
